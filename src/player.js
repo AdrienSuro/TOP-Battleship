@@ -1,6 +1,6 @@
 // import gameboard from "./gameboard.js";
 
-export default function createPlayer(user) {
+export default function player(user) {
   const attack = () => {
     if (user == "computer") {
       let randomRow = Math.floor(Math.random() * 10);
@@ -15,6 +15,3 @@ export default function createPlayer(user) {
   };
   return { attack };
 }
-
-let testPlayer = createPlayer("computer");
-console.log(testPlayer.attack());

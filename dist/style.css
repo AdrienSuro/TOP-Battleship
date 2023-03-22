@@ -31,3 +31,21 @@ body {
     grid-row: 2/3;
     grid-column: 2/3;
 }
+
+#leftgridcontainer, #rightgridcontainer {
+    width: 200px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr)
+}
+
+#leftgridcontainer > div {
+    border: solid 1px var(--main-color-1);
+}
+
+#rightgridcontainer > div {
+    border: solid 1px var(--main-color-2);
+}
