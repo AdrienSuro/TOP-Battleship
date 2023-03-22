@@ -1,4 +1,5 @@
-console.log("hi there")
-console.log("love")
-console.log("test")
-console.log("fourth")
+function testForAdd(a, b) { 
+    return (a + b)
+};
+
+export default testForAdd;

@@ -1,1 +1,1 @@
-console.log("hi there"),console.log("love"),console.log("test");
+(()=>{"use strict";let e=(10,{receiveAttack:()=>!0,createShip:e=>{let t=function(e){let t=0;return{hit:()=>{t!=e&&t++},isSunk:function(){return t==e}}}(e);return t},createGrid:()=>{const e=[];for(let t=0;t<10;t++){e.push([]);for(let r=0;r<10;r++)e[t].push({isHit:!1,hasShip:!1})}return e}});let t=e.createGrid();console.log(e),console.log(t)})();
