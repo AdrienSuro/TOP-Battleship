@@ -1,20 +1,22 @@
 export default function ship(length) {
-    let hits = 0
-    const hit = () => {
-        if (hits == length) {
-            return
-        }
-        hits++
+  let coordinates = [];
+  let hits = 0;
+  const hit = () => {
+    if (hits == length) {
+      return;
     }
-    const isSunk = function() {
-        if (hits == length) {
-            return true
-        }
-        else {
-            return false
-        }
+    hits++;
+  };
+  const isSunk = function () {
+    if (hits == length) {
+      return true;
+    } else {
+      return false;
     }
-    return {
-        hit, isSunk
-    }
+  };
+  return {
+    hit,
+    isSunk,
+    coordinates,
+  };
 }

@@ -49,3 +49,11 @@ body {
 #rightgridcontainer > div {
     border: solid 1px var(--main-color-2);
 }
+
+.hit {
+    background-color: yellow;
+}
+
+.missed {
+    background-color: red;
+}
