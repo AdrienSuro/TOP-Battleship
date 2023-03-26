@@ -10,14 +10,14 @@ function displayGrid(gridArray, location, gameboard) {
         let cellCoordinates = ((cell.id).slice(1,3)).split("")
         if (gameboard.allShipsPlaced === false) {
           cell.toggleAttribute("class", "hasShip"); //créer la classe en css
-          gameboard[i][j].hasShip = true;
+          gridArray[i][j].hasShip = true;
           gameboard.createShip([i, j]);
         }
         else if (gameboard.allShipsPlaced === true) {
-          if (gameboard[i][j].hasShip === true) {
+          if (gridArray[i][j].hasShip === true) {
             cell.toggleAttribute("class", "shipIsHit")
           }
-          else if (gameboard[i][j].hasShip === false) {
+          else if (gridArray[i][j].hasShip === false) {
             cell.toggleAttribute("class", "emptyIsHit")
           }
           
