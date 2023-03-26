@@ -1,4 +1,5 @@
 export default function ship(length, [i, j]) {
+  console.log("inside ship");
   let coordinatesArray = [[i, j]];
   const nextCoordinates = (coordinates) => {
     coordinatesArray.push(coordinates);
@@ -18,8 +19,10 @@ export default function ship(length, [i, j]) {
     }
   };
   return {
+    length,
     hit,
     isSunk,
     nextCoordinates,
+    coordinatesArray,
   };
 }

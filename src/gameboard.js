@@ -1,6 +1,7 @@
 import ship from "./ship.js";
 
 export default function gameboard(width) {
+  let allShipsCoord = [];
   let shipsArray = []; //array d'objets ship qu'on va looper pour voir si la case cliquée a un bateau et identifier le bateau "à détruire"
   let allShipsPlaced = false;
   let numberOfShips = 0;
@@ -18,40 +19,60 @@ export default function gameboard(width) {
     return gameboardArray;
   };
   const createShip = (coordinates) => {
+    console.log("inside createShip");
     if (numberOfShips === 0) {
+      console.log("inside number of ships = 0");
       let newShip = ship(4, coordinates);
+      allShipsCoord.push(coordinates);
       for (let i = 1; i < newShip.length; i++) {
+        console.log("inside for loop");
+        console.log(newShip.length);
         let promptCoordinates = prompt(
-          "Enter new coordinates in this format [0, 3]"
+          "Enter new coordinates in this format 03"
         );
-        newShip.nextCoordinates(promptCoordinates);
+        let coordArray = [];
+        [...promptCoordinates].forEach((e) => coordArray.push(parseInt(e)));
+        newShip.nextCoordinates(coordArray);
       }
       shipsArray.push(newShip);
+      newShip.coordinatesArray.forEach((e) => {
+        console.log(
+          "allShipsCoord / inside loop that adds each coord that has ship"
+        );
+        allShipsCoord.push(e);
+      });
+      console.log(shipsArray);
       numberOfShips++;
-    }
-    if (numberOfShips === 1 || numberOfShips === 2) {
+      return shipsArray;
+    } else if (numberOfShips === 1 || numberOfShips === 2) {
       let newShip = ship(3, coordinates);
       for (let i = 1; i < newShip.length; i++) {
         let promptCoordinates = prompt(
-          "Enter new coordinates in this format [0, 3]"
+          "Enter new coordinates in this format 03"
         );
-        newShip.nextCoordinates(promptCoordinates);
+        let coordArray = [];
+        [...promptCoordinates].forEach((e) => coordArray.push(parseInt(e)));
+        newShip.nextCoordinates(coordArray);
       }
       shipsArray.push(newShip);
       numberOfShips++;
-    }
-    if (numberOfShips === 3 || numberOfShips === 4 || numberOfShips === 5) {
+    } else if (
+      numberOfShips === 3 ||
+      numberOfShips === 4 ||
+      numberOfShips === 5
+    ) {
       let newShip = ship(2, coordinates);
       for (let i = 1; i < newShip.length; i++) {
         let promptCoordinates = prompt(
           "Enter new coordinates in this format [0, 3]"
         );
-        newShip.nextCoordinates(promptCoordinates);
+        let coordArray = [];
+        [...promptCoordinates].forEach((e) => coordArray.push(parseInt(e)));
+        newShip.nextCoordinates(coordArray);
       }
       shipsArray.push(newShip);
       numberOfShips++;
-    }
-    if (
+    } else if (
       numberOfShips === 6 ||
       numberOfShips === 7 ||
       numberOfShips === 8 ||
@@ -60,8 +81,7 @@ export default function gameboard(width) {
       let newShip = ship(1, coordinates);
       shipsArray.push(newShip);
       numberOfShips++;
-    }
-    if (numberOfShips == 10) {
+    } else if (numberOfShips == 10) {
       allShipsPlaced = true;
       return;
     }
@@ -72,5 +92,6 @@ export default function gameboard(width) {
     createShip,
     allShipsPlaced,
     numberOfShips,
+    allShipsCoord,
   };
 }

@@ -22,6 +22,3 @@ function newGame() {
 }
 
 newGame();
-console.log(leftGrid);
-
-export { rightGameboard, leftGameboard, leftGridArray, rightGridArray };

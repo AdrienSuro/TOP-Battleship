@@ -1,5 +1,4 @@
 export { displayGrid };
-import { leftGameboard, rightGameboard, leftGridArray, rightGridArray } from "gamelogic.js"
 
 function displayGrid(gridArray, location, gameboard) {
   for (let i = 0; i < gridArray.length; i++) {
@@ -7,39 +6,31 @@ function displayGrid(gridArray, location, gameboard) {
       let cell = document.createElement("div");
       cell.setAttribute("id", `C${i}${j}`);
       cell.addEventListener("click", () => {
-        let cellCoordinates = ((cell.id).slice(1,3)).split("")
+        console.log("Inside add EL");
+        // let cellCoordinates = cell.id.slice(1, 3).split("");
         if (gameboard.allShipsPlaced === false) {
-          cell.toggleAttribute("class", "hasShip"); //créer la classe en css
+          console.log("Inside add EL && allShipsPlace = false");
+          cell.classList.toggle("hasShip");
           gridArray[i][j].hasShip = true;
+          console.log(gridArray); //Problème : comment mettre à jour les autres cases du ship ?
           gameboard.createShip([i, j]);
-        }
-        else if (gameboard.allShipsPlaced === true) {
+          gameboard.allShipsCoord.forEach((e) => {
+            let i = e[0];
+            let j = e[1];
+            gridArray[i][j].hasShip = true;
+            let getCell = document.getElementById(`C${i}${j}`);
+            getCell.classList.toggle("hasShip");
+          });
+        } else if (gameboard.allShipsPlaced === true) {
+          console.log("Inside add EL && allShipsPlace = true");
           if (gridArray[i][j].hasShip === true) {
-            cell.toggleAttribute("class", "shipIsHit")
+            cell.toggleAttribute("class", "shipIsHit");
+          } else if (gridArray[i][j].hasShip === false) {
+            cell.toggleAttribute("class", "emptyIsHit");
           }
-          else if (gridArray[i][j].hasShip === false) {
-            cell.toggleAttribute("class", "emptyIsHit")
-          }
-          
-          // receive attack
         }
-        receiveAttack(i, j); // MODIFIER LA FCT receveiveAttack pour qu'elle puisse répondre à cet event listener
-        console.log(gridArray);
       });
       location.appendChild(cell);
     }
   }
 }
-
-// Essai pour créer un ship :
-let shipsArray = [];
-if ([i, j]) // n'est pas dans shipsArray alors créer un new ship : 
-let newShip = ship(3, i, j);
-// dans le cas d'une attaque :
-if (shipsArray[i].coordinates === [5, 2]) // the second operand will be a variable passed to receiveattack
-shipsArray.push(newShip);
-// créer un find pour voir si les coordonnées attaquées correspondent à i, j d'un ship
-
-// TEST FROM BOULOT : 
-
-console.log(shipObject.addCoordinates([[0, 0], [0, 1], [0, 2]]));
