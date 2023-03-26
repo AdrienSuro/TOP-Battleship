@@ -1,5 +1,8 @@
-export default function ship(length) {
-  let coordinates = [];
+export default function ship(length, [i, j]) {
+  let coordinatesArray = [[i, j]];
+  const nextCoordinates = (coordinates) => {
+    coordinatesArray.push(coordinates);
+  };
   let hits = 0;
   const hit = () => {
     if (hits == length) {
@@ -17,6 +20,6 @@ export default function ship(length) {
   return {
     hit,
     isSunk,
-    coordinates,
+    nextCoordinates,
   };
 }

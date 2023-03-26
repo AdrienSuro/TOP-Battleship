@@ -3,30 +3,25 @@ import ship from "./ship.js";
 import gameboard from "./gameboard.js";
 import { displayGrid } from "./dom.js";
 
+function startNewGame() {
+  let player1 = player("user");
+  let player2 = player("computer");
+}
+
 const leftgridcontainer = document.getElementById("leftgridcontainer");
 const rightgridcontainer = document.getElementById("rightgridcontainer");
-console.log(leftgridcontainer);
 
 function newGame() {
   let leftGameboard = gameboard(10);
-  let leftGrid = leftGameboard.createGrid(); //is an array
-  displayGrid(leftGrid, leftgridcontainer, leftGameboard);
-  let leftShipsGrid = leftGameboard.createShipsGrid();
   let rightGameboard = gameboard(10);
-  let rightGrid = rightGameboard.createGrid(); // is an array
-  displayGrid(rightGrid, rightgridcontainer, rightGameboard);
-  let leftPlayer = player("user");
-  let rightPlayer = player("computer");
-  return { leftShipsGrid };
+  let leftGridArray = leftGameboard.createGrid(); //is an array
+  let rightGridArray = rightGameboard.createGrid(); // is an array
+  displayGrid(leftGridArray, leftgridcontainer, leftGameboard);
+  displayGrid(rightGridArray, rightgridcontainer, rightGameboard);
+  return { leftGameboard, rightGameboard, leftGridArray, rightGridArray };
 }
 
 newGame();
+console.log(leftGrid);
 
-//Create the ships manually :
-
-let shipBiggest1 = ship(4);
-shipBiggest1.coordinates[0] = [leftShipsGrid[0][0]];
-leftGrid[0][0].hasShip = true;
-leftGrid[1][0].hasShip = true;
-leftGrid[2][0].hasShip = true;
-leftGrid[3][0].hasShip = true;
+export { rightGameboard, leftGameboard, leftGridArray, rightGridArray };

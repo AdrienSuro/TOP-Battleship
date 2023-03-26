@@ -1,64 +1,76 @@
-import ship from "./ship";
+import ship from "./ship.js";
 
 export default function gameboard(width) {
-  const receiveAttack = (grid, row, column) => {
-    if (grid[row][column].hasShip === true) {
-      grid[row][column].isHit = true;
-    } else {
-      console.log("missed !");
-      console.log(grid[row][column]);
-      this.classList.toggle("hit");
-      this.classList.toggle("missed");
-    }
-  };
-  const createShip = (length) => {
-    let newShip = ship(length);
-    return newShip; //returns a ship Object
-  };
+  let shipsArray = []; //array d'objets ship qu'on va looper pour voir si la case cliquée a un bateau et identifier le bateau "à détruire"
+  let allShipsPlaced = false;
+  let numberOfShips = 0;
   const createGrid = () => {
-    const rows = [];
+    const gameboardArray = [];
     for (let i = 0; i < width; i++) {
-      rows.push([]);
+      gameboardArray.push([]);
       for (let j = 0; j < width; j++) {
-        rows[i].push({
-          x: [i],
-          y: [j],
+        gameboardArray[i].push({
           isHit: false,
           hasShip: false,
-          addShip: function (length) {
-            if (this.hasShip === false) {
-              this.createShip(length);
-              this.hasShip = true;
-            } else if (this.hasShip === true) {
-              return;
-            }
-          },
         });
       }
     }
-    return rows;
+    return gameboardArray;
   };
-
-  const createShipsGrid = () => {
-    const shipsArray = [];
-    for (let i = 0; i < width; i++) {
-      shipsArray.push([]);
-      for (let j = 0; j < width; j++) {
-        shipsArray[i].push();
+  const createShip = (coordinates) => {
+    if (numberOfShips === 0) {
+      let newShip = ship(4, coordinates);
+      for (let i = 1; i < newShip.length; i++) {
+        let promptCoordinates = prompt(
+          "Enter new coordinates in this format [0, 3]"
+        );
+        newShip.nextCoordinates(promptCoordinates);
       }
+      shipsArray.push(newShip);
+      numberOfShips++;
     }
-    return shipsArray;
+    if (numberOfShips === 1 || numberOfShips === 2) {
+      let newShip = ship(3, coordinates);
+      for (let i = 1; i < newShip.length; i++) {
+        let promptCoordinates = prompt(
+          "Enter new coordinates in this format [0, 3]"
+        );
+        newShip.nextCoordinates(promptCoordinates);
+      }
+      shipsArray.push(newShip);
+      numberOfShips++;
+    }
+    if (numberOfShips === 3 || numberOfShips === 4 || numberOfShips === 5) {
+      let newShip = ship(2, coordinates);
+      for (let i = 1; i < newShip.length; i++) {
+        let promptCoordinates = prompt(
+          "Enter new coordinates in this format [0, 3]"
+        );
+        newShip.nextCoordinates(promptCoordinates);
+      }
+      shipsArray.push(newShip);
+      numberOfShips++;
+    }
+    if (
+      numberOfShips === 6 ||
+      numberOfShips === 7 ||
+      numberOfShips === 8 ||
+      numberOfShips === 9
+    ) {
+      let newShip = ship(1, coordinates);
+      shipsArray.push(newShip);
+      numberOfShips++;
+    }
+    if (numberOfShips == 10) {
+      allShipsPlaced = true;
+      return;
+    }
   };
 
   return {
-    receiveAttack,
-    createShip,
     createGrid,
-    createShipsGrid,
+    createShip,
+    allShipsPlaced,
+    numberOfShips,
   };
 }
-
-let testGameboard = gameboard(10);
-let z = testGameboard.createGrid();
-console.log(testGameboard);
-console.log(z);

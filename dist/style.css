@@ -50,10 +50,15 @@ body {
     border: solid 1px var(--main-color-2);
 }
 
-.hit {
-    background-color: yellow;
+.hasShip {
+    background-color: lightslategrey;
+    border : solid 3px black;
 }
 
-.missed {
+.shipIsHit {
     background-color: red;
+}
+
+.emptyIsHit {
+    background-color: greenyellow;
 }
