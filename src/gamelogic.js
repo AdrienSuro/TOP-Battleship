@@ -1,21 +1,27 @@
 import Ship from "./ship.js";
 import currentShipLength from "./index.js";
-import shipNames from "./index.js"
+import shipNames from "./index.js";
+import gameboardArrayA from "./index.js";
 
 function addShip(cellId) {
-    let currentShipName = shipNames.pop()
-    let newShip = new Ship(currentShipLength, currentShipName, cellId); 
-    cellsArray(cellId).hasShip = newShip.shipName; //quand le coordinatesArray est usccèssivement nourri, créer un Ship sur base de cela
-    cellId.setAttribute("class", "hasShip");
-
-    let possibleCells = calculateNextMove(previousCell);
-    highlightCellsAndAddEL(possibleCells);
-    return newShip;
-  }
-  //supprimer tous les EL et rajouter un EL "général" à tous les autres
+  let currentShipName = shipNames.pop();
+  let newShip = new Ship(currentShipLength, currentShipName, cellId); // -> cmt update currentShipLength ?
+  cellId.setAttribute("class", "hasShip");
+  gameboardArrayA[cellId.slice(-1)].hasShip = true;
+  gameboardArrayA[cellId.slice(-1)].shipName = currentShipName;
+  let possibleCells = calculateNextMove(previousCell);
+  highlightCellsAndAddEL(possibleCells);
+  return newShip;
 }
+//supprimer tous les EL et rajouter un EL "général" à tous les autres
 
-function addCellsToCurrentShip(previousCell, shipLength, newShip) {
+function addCellsToCurrentShip(
+  previousCell,
+  currentShipLength,
+  currentShipName
+) {
+  // créer ici un return statement qui permet d'arrêter l'ajouter de cells et remet des EL classiques partout
+  // currentShipName doit permettre d'ajouter les coordonnées de la cell au Ship en cours
   let possibleCells = calculateNextMove(previousCell);
   highlightCellsAndAddEL(possibleCells);
   currentShipLength++;

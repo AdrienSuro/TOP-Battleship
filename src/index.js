@@ -38,4 +38,10 @@ export function getgameboardArrayB() {
   return gameboardArrayB;
 }
 
-export { currentShip, currentCell, currentShipLength, shipNames };
+export {
+  currentShip,
+  currentCell,
+  currentShipLength,
+  shipNames,
+  gameboardArrayA,
+};
