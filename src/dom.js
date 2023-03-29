@@ -35,6 +35,7 @@ function addELforNextCells(cellId, shipSize, shipName) {
   highlightCellsAndAddEL(possibleCells);
 }
 
+// mettre le contenu de la fct ci-dessous, dans la fct ci-dessus
 function highlightCellsAndAddEL(numbersArray) {
   removeAllEventListenersFromCells(); //remove all event listeners
   numbersArray.forEach((e) => {
