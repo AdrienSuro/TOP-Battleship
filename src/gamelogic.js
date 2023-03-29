@@ -1,14 +1,13 @@
 import Ship from "./ship.js";
-import currentShipLength from "./index.js";
-import shipNames from "./index.js";
+import shipStore from "./index.js";
 import gameboardArrayA from "./index.js";
 
 function addShip(cellId) {
-  let currentShipName = shipNames.pop();
-  let newShip = new Ship(currentShipLength, currentShipName, cellId); // -> cmt update currentShipLength ?
+  let retrieveShip = shipStore.pop();
+  let newShip = new Ship(retrieveShip.size, retrieveShip.name, cellId); // -> cmt update currentShipLength ?
   cellId.setAttribute("class", "hasShip");
   gameboardArrayA[cellId.slice(-1)].hasShip = true;
-  gameboardArrayA[cellId.slice(-1)].shipName = currentShipName;
+  gameboardArrayA[cellId.slice(-1)].shipName = retrieveShip.name;
   let possibleCells = calculateNextMove(previousCell);
   highlightCellsAndAddEL(possibleCells);
   return newShip;
