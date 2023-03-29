@@ -62,3 +62,12 @@ body {
 .emptyIsHit {
     background-color: greenyellow;
 }
+
+.hasShip {
+    background-color: darkgray;
+    border: dotted 3px rgba(101, 98, 98, 0.121)
+}
+
+.highlight {
+    background-color: yellow;
+}

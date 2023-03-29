@@ -5,7 +5,7 @@ import { addELAddShip } from "./dom.js";
 
 let currentCell = undefined;
 let currentShip = undefined;
-let shipFleet = []
+let shipFleet = [];
 let shipStore = [
   { name: 9, size: 1 },
   { name: 8, size: 1 },
@@ -38,11 +38,4 @@ export function getgameboardArrayB() {
   return gameboardArrayB;
 }
 
-export {
-  currentShip,
-  currentCell,
-  currentShipLength,
-  shipStore,
-  gameboardArrayA,
-  shipFleet
-};
+export { currentShip, currentCell, shipStore, gameboardArrayA, shipFleet };

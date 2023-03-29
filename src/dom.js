@@ -1,7 +1,10 @@
 import addShip from "./gamelogic.js";
 import gameboardArrayA from "./index.js";
-import { addCellsToCurrentShip, currentShipLength, calculateNextMove } from "./gamelogic.js";
-
+import {
+  addCellsToCurrentShip,
+  currentShipLength,
+  calculateNextMove,
+} from "./gamelogic.js";
 
 function createBothGrids() {
   let leftgrid = document.getElementById("leftgridcontainer");
@@ -24,25 +27,26 @@ function addELAddShip() {
   });
 }
 
-function addELforNextCells(cellId, shipSize, shipName) {
+function addELforNextCells(cellId, shipSize, currentShip) {
   if (currentShipLength <= 1) {
     removeAllEventListenersFromCells();
     addELAddShip();
     return;
   }
   let possibleCells = calculateNextMove(cellId);
-  removeAllEventListenersFromCells(); 
+  removeAllEventListenersFromCells();
   possibleCells.forEach((e) => {
     let cell = document.getElementById(`_${e}`);
     cell.setAttribute("class", "highlight");
     cell.addEventListener("click", (e) => {
-      addCellsToCurrentShip(e.id, shipSize, shipName);
+      e.setAttribute("class", "hasShip");
+      addCellsToCurrentShip(e.id, shipSize, currentShip);
     });
-})
+  });
 }
 
 function highlightCellsAndAddEL(numbersArray, shipSize, shipName) {
-  removeAllEventListenersFromCells(); 
+  removeAllEventListenersFromCells();
   numbersArray.forEach((e) => {
     let cell = document.getElementById(`_${e}`);
     cell.setAttribute("class", "highlight");

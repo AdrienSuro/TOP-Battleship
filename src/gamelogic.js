@@ -1,5 +1,5 @@
 import Ship from "./ship.js";
-import {shipStore, shipFleet, gameboardArrayA} from "./index.js";
+import { shipStore, shipFleet, gameboardArrayA } from "./index.js";
 import removeAllEventListenersFromCells from "./dom.js";
 import { addELAddShip } from "./dom.js";
 import addELforNextCells from "./dom.js";
@@ -14,15 +14,15 @@ function addShip(cellId) {
   cellId.setAttribute("class", "hasShip");
   gameboardArrayA[cellId.slice(-1)].hasShip = true;
   gameboardArrayA[cellId.slice(-1)].shipName = retrieveShip.name;
-  addELforNextCells(cellId.slice(-1), currentShipLength, retrieveShip.name);
+  addELforNextCells(cellId.slice(-1), currentShipLength, newShip);
 }
 
-function addCellsToCurrentShip(cell, currentShipLength, newShip) {
-  currentShip.addCoordinates(cell) // OK 
-  
-  newShip.addCoordinates(nextCoord); //mettre à jour nextCoord
+function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
+  currentShip.addCoordinates(cell); // OK
+  gameboardArrayA[cell.slice(-1)].hasShip = true;
+  gameboardArrayA[cell.slice(-1)].shipName = currentShip.name;
   currentShipLength--;
-  addELforNextCells(cell, shipSize, shipName);
+  addELforNextCells(cell, shipSize, currentShip);
 }
 
 function calculateNextMove(number) {
@@ -42,16 +42,16 @@ function calculateNextMove(number) {
     numbersArray.push(number + 10);
   }
   if (
-    number != 00 ||
-    number != 01 ||
-    number != 02 ||
-    number != 03 ||
-    number != 04 ||
-    number != 05 ||
-    number != 06 ||
-    number != 07 ||
-    number != 08 ||
-    number != 09
+    number != 0 ||
+    number != 1 ||
+    number != 2 ||
+    number != 3 ||
+    number != 4 ||
+    number != 5 ||
+    number != 6 ||
+    number != 7 ||
+    number != 8 ||
+    number != 9
   ) {
     numbersArray.push(number - 10);
   }
@@ -75,4 +75,9 @@ function calculateNextMove(number) {
   return numbersArray;
 }
 
-export { addShip, addCellsToCurrentShip, currentShipLength };
+export default {
+  addShip,
+  addCellsToCurrentShip,
+  currentShipLength,
+  calculateNextMove,
+};
