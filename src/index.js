@@ -5,17 +5,18 @@ import { addELAddShip } from "./dom.js";
 
 let currentCell = undefined;
 let currentShip = undefined;
+let shipFleet = []
 let shipStore = [
-  { name: "corvette4", size: 1 },
-  { name: "corvette3", size: 1 },
-  { name: "corvette2", size: 1 },
-  { name: "corvette1", size: 1 },
-  { name: "submarine3", size: 2 },
-  { name: "submarine2", size: 2 },
-  { name: "submarine1", size: 2 },
-  { name: "cruiser2", size: 3 },
-  { name: "cruiser1", size: 3 },
-  { name: "battleship1", size: 4 },
+  { name: 9, size: 1 },
+  { name: 8, size: 1 },
+  { name: 7, size: 1 },
+  { name: 6, size: 1 },
+  { name: 5, size: 2 },
+  { name: 4, size: 2 },
+  { name: 3, size: 2 },
+  { name: 2, size: 3 },
+  { name: 1, size: 3 },
+  { name: 0, size: 4 },
 ];
 
 // MIDDLE : Game Session :
@@ -43,4 +44,5 @@ export {
   currentShipLength,
   shipStore,
   gameboardArrayA,
+  shipFleet
 };

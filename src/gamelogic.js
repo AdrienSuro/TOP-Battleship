@@ -1,27 +1,28 @@
 import Ship from "./ship.js";
-import shipStore from "./index.js";
-import gameboardArrayA from "./index.js";
+import {shipStore, shipFleet, gameboardArrayA} from "./index.js";
 import removeAllEventListenersFromCells from "./dom.js";
 import { addELAddShip } from "./dom.js";
 import addELforNextCells from "./dom.js";
 
+let currentShipLength = 0;
+
 function addShip(cellId) {
   let retrieveShip = shipStore.pop();
+  currentShipLength = retrieveShip.size;
   let newShip = new Ship(retrieveShip.size, retrieveShip.name, cellId); // -> cmt update currentShipLength ?
+  shipFleet.push(newShip);
   cellId.setAttribute("class", "hasShip");
   gameboardArrayA[cellId.slice(-1)].hasShip = true;
   gameboardArrayA[cellId.slice(-1)].shipName = retrieveShip.name;
-  addELforNextCells(cellId, retrieveShip.size, retrieveShip.name);
+  addELforNextCells(cellId.slice(-1), currentShipLength, retrieveShip.name);
 }
-//supprimer tous les EL et rajouter un EL "général" à tous les autres
 
-//ci-dessous à retravailler !! (mer 7h33)
-function addCellsToCurrentShip(previousCell, currentShipLength, newShip) {
-  addCellsToCurrentShip(e);
-  let nextCoord = "";
+function addCellsToCurrentShip(cell, currentShipLength, newShip) {
+  currentShip.addCoordinates(cell) // OK 
+  
   newShip.addCoordinates(nextCoord); //mettre à jour nextCoord
   currentShipLength--;
-  addELforNextCells(cellId, shipSize, shipName);
+  addELforNextCells(cell, shipSize, shipName);
 }
 
 function calculateNextMove(number) {
@@ -74,4 +75,4 @@ function calculateNextMove(number) {
   return numbersArray;
 }
 
-export { addShip, addCellsToCurrentShip };
+export { addShip, addCellsToCurrentShip, currentShipLength };
