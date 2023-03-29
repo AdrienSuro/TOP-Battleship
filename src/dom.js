@@ -1,6 +1,7 @@
 import addShip from "./gamelogic.js";
 import gameboardArrayA from "./index.js";
 import { addCellsToCurrentShip } from "./gamelogic.js";
+import calculateNextMove from "./gamelogic.js";
 
 function createBothGrids() {
   let leftgrid = document.getElementById("leftgridcontainer");
@@ -15,11 +16,23 @@ function createBothGrids() {
 function addELAddShip() {
   let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
   LeftAllEmptyCells.addEventListener("click", (event) => {
-    event.target.removeAttribute("class", "emptyCell");
-    event.target.setAttribute("class", "hasShip");
-    addShip(event.target.id);
-    gameboardArrayA;
+    if (event.target.hasAttribute("class", "emptyCell")) {
+      event.target.removeAttribute("class", "emptyCell");
+      event.target.setAttribute("class", "hasShip");
+      addShip(event.target.id);
+    }
   });
+}
+
+//retravailler pour faire passer tous les arguments d'une fct à l'autre
+function addELforNextCells(cellId, shipSize, shipName) {
+  if (currentShipLength <= 1) {
+    removeAllEventListenersFromCells();
+    addELAddShip();
+    return;
+  }
+  let possibleCells = calculateNextMove(previousCell);
+  highlightCellsAndAddEL(possibleCells);
 }
 
 function highlightCellsAndAddEL(numbersArray) {
@@ -28,7 +41,11 @@ function highlightCellsAndAddEL(numbersArray) {
     let cell = document.getElementById(`_${e}`);
     cell.setAttribute("id", "highlight");
     cell.addEventListener("click", (e) => {
-      addCellsToCurrentShip(e);
+      addCellsToCurrentShip(e, shipSize, shipName);
+      let nextCoord = "";
+      newShip.addCoordinates(nextCoord); //mettre à jour nextCoord
+      currentShipLength--;
+      addCellsToCurrentShip(previousCell, currentShipLength, newShip);
     });
   });
 }
@@ -48,4 +65,5 @@ export {
   highlightCellsAndAddEL,
   addELAddShip,
   createBothGrids,
+  addELforNextCells,
 };
