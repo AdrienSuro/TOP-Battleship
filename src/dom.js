@@ -1,6 +1,6 @@
-import addShip from "./gamelogic.js";
-import gameboardArrayA from "./index.js";
+import gameboardArrayA, { shipFleet } from "./index.js";
 import {
+  addShip,
   addCellsToCurrentShip,
   currentShipLength,
   calculateNextMove,
@@ -30,6 +30,9 @@ function addELAddShip() {
 function addELforNextCells(cellId, shipSize, currentShip) {
   if (currentShipLength <= 1) {
     removeAllEventListenersFromCells();
+    if (shipFleet.length === 0) {
+      return;
+    }
     addELAddShip();
     return;
   }

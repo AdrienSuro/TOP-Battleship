@@ -1,12 +1,14 @@
 import Ship from "./ship.js";
 import { shipStore, shipFleet, gameboardArrayA } from "./index.js";
-import removeAllEventListenersFromCells from "./dom.js";
-import { addELAddShip } from "./dom.js";
-import addELforNextCells from "./dom.js";
+import {
+  removeAllEventListenersFromCells,
+  addELAddShip,
+  addELforNextCells,
+} from "./dom.js";
 
-let currentShipLength = 0;
+export let currentShipLength = 0;
 
-function addShip(cellId) {
+export function addShip(cellId) {
   let retrieveShip = shipStore.pop();
   currentShipLength = retrieveShip.size;
   let newShip = new Ship(retrieveShip.size, retrieveShip.name, cellId); // -> cmt update currentShipLength ?
@@ -17,7 +19,7 @@ function addShip(cellId) {
   addELforNextCells(cellId.slice(-1), currentShipLength, newShip);
 }
 
-function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
+export function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
   currentShip.addCoordinates(cell); // OK
   gameboardArrayA[cell.slice(-1)].hasShip = true;
   gameboardArrayA[cell.slice(-1)].shipName = currentShip.name;
@@ -25,7 +27,7 @@ function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
   addELforNextCells(cell, shipSize, currentShip);
 }
 
-function calculateNextMove(number) {
+export function calculateNextMove(number) {
   let numbersArray = [];
   if (
     number != 90 ||
@@ -74,10 +76,3 @@ function calculateNextMove(number) {
   }
   return numbersArray;
 }
-
-export default {
-  addShip,
-  addCellsToCurrentShip,
-  currentShipLength,
-  calculateNextMove,
-};
