@@ -12,7 +12,7 @@ function createBothGrids() {
     let newCell = document.createElement("div");
     newCell.setAttribute("class", "emptyCell");
     newCell.setAttribute("id", `a${i}`);
-    leftgrid.appendChild();
+    leftgrid.appendChild(newCell);
   }
 }
 
@@ -27,51 +27,49 @@ function addELAddShip() {
   });
 }
 
-function addELforNextCells(cellId, shipSize, currentShip) {
+function addELforNextCells(cellId, currentShipLength, currentShip) {
+  removeAllEventListenersFromCells();
   if (currentShipLength <= 1) {
-    removeAllEventListenersFromCells();
     if (shipFleet.length === 0) {
       return;
     }
     addELAddShip();
     return;
   }
-  let possibleCells = calculateNextMove(cellId);
+  console.log(cellId);
+  console.log(currentShipLength);
+  let possibleCells = calculateNextMove(cellId.slice(1));
   removeAllEventListenersFromCells();
   possibleCells.forEach((e) => {
-    let cell = document.getElementById(`_${e}`);
+    let cell = document.getElementById(`a${e}`);
+    cell.removeAttribute("class", "emptyCell");
     cell.setAttribute("class", "highlight");
     cell.addEventListener("click", (e) => {
-      e.setAttribute("class", "hasShip");
-      addCellsToCurrentShip(e.id, shipSize, currentShip);
-    });
-  });
-}
-
-function highlightCellsAndAddEL(numbersArray, shipSize, shipName) {
-  removeAllEventListenersFromCells();
-  numbersArray.forEach((e) => {
-    let cell = document.getElementById(`_${e}`);
-    cell.setAttribute("class", "highlight");
-    cell.addEventListener("click", (e) => {
-      addCellsToCurrentShip(e, shipSize, shipName);
+      possibleCells.forEach((e) => {
+        let cell = document.getElementById(`a${e}`);
+        cell.removeAttribute("class", "highlight");
+      });
+      cell.setAttribute("class", "hasShip");
+      console.log("inside event listener for next cell");
+      addCellsToCurrentShip(cell.id, currentShipLength, currentShip);
     });
   });
 }
 
 function removeAllEventListenersFromCells() {
   //inversement, créer cet Event Listener pour toutes les cases au début
-  let allCells = document.querySelectorAll("class", "cell");
-  allCells.forEach(() => {
-    removeEventListener("click", (e) => {
-      addShip(e);
-    });
+  let allLeftCells = document.getElementById("leftgridcontainer");
+  allLeftCells.removeEventListener("click", (event) => {
+    if (event.target.hasAttribute("class", "emptyCell")) {
+      event.target.removeAttribute("class", "emptyCell");
+      event.target.setAttribute("class", "hasShip");
+      addShip(event.target.id);
+    }
   });
 }
 
 export {
   removeAllEventListenersFromCells,
-  highlightCellsAndAddEL,
   addELAddShip,
   createBothGrids,
   addELforNextCells,

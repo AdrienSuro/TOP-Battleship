@@ -13,21 +13,27 @@ export function addShip(cellId) {
   currentShipLength = retrieveShip.size;
   let newShip = new Ship(retrieveShip.size, retrieveShip.name, cellId); // -> cmt update currentShipLength ?
   shipFleet.push(newShip);
-  cellId.setAttribute("class", "hasShip");
-  gameboardArrayA[cellId.slice(-1)].hasShip = true;
-  gameboardArrayA[cellId.slice(-1)].shipName = retrieveShip.name;
-  addELforNextCells(cellId.slice(-1), currentShipLength, newShip);
+  console.log(shipFleet);
+  gameboardArrayA[cellId.slice(1)].hasShip = true;
+  gameboardArrayA[cellId.slice(1)].shipName = retrieveShip.name;
+  addELforNextCells(cellId, currentShipLength, newShip);
 }
 
 export function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
+  console.log("inside add next cells to ship");
+  console.log(cell);
   currentShip.addCoordinates(cell); // OK
-  gameboardArrayA[cell.slice(-1)].hasShip = true;
-  gameboardArrayA[cell.slice(-1)].shipName = currentShip.name;
+  console.log(currentShip.coord);
+  gameboardArrayA[cell.slice(1)].hasShip = true;
+  gameboardArrayA[cell.slice(1)].shipName = currentShip.name;
   currentShipLength--;
-  addELforNextCells(cell, shipSize, currentShip);
+  console.log(currentShipLength);
+  addELforNextCells(cell, currentShipLength, currentShip);
 }
 
 export function calculateNextMove(number) {
+  number = parseFloat(number);
+  console.log(number);
   let numbersArray = [];
   if (
     number != 90 ||
@@ -74,5 +80,6 @@ export function calculateNextMove(number) {
   ) {
     numbersArray.push(number + 1);
   }
+  console.log(numbersArray);
   return numbersArray;
 }

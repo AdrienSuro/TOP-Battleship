@@ -1,7 +1,7 @@
 // This will be the main JS script
 //TOP: Necessary imports and global variables
 import Gameboard from "./gameboard.js";
-import { addELAddShip } from "./dom.js";
+import { addELAddShip, createBothGrids } from "./dom.js";
 
 let currentCell = undefined;
 let currentShip = undefined;
@@ -24,6 +24,7 @@ let shipStore = [
 let gameboardA = new Gameboard("a");
 let gameboardB = new Gameboard("b");
 let gameboardArrayA = getgameboardArrayA();
+createBothGrids();
 // Fn basing upon gameboardA create grid
 addELAddShip(); // adds EL to the left grid
 
