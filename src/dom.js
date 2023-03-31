@@ -18,16 +18,19 @@ function createBothGrids() {
 
 function addELAddShip() {
   let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
-  LeftAllEmptyCells.addEventListener("click", (event) => {
-    if (event.target.hasAttribute("class", "emptyCell")) {
-      event.target.removeAttribute("class", "emptyCell");
-      event.target.setAttribute("class", "hasShip");
-      addShip(event.target.id);
-    }
-  });
+  LeftAllEmptyCells.addEventListener("click", addShipDOM);
+}
+
+function addShipDOM(event) {
+  if (event.target.hasAttribute("class", "emptyCell")) {
+    event.target.removeAttribute("class", "emptyCell");
+    event.target.setAttribute("class", "hasShip");
+    addShip(event.target.id);
+  }
 }
 
 function addELforNextCells(cellId, currentShipLength, currentShip) {
+  console.log(currentShipLength);
   removeAllEventListenersFromCells();
   if (currentShipLength <= 1) {
     if (shipFleet.length === 0) {
@@ -57,15 +60,9 @@ function addELforNextCells(cellId, currentShipLength, currentShip) {
 }
 
 function removeAllEventListenersFromCells() {
-  //inversement, créer cet Event Listener pour toutes les cases au début
-  let allLeftCells = document.getElementById("leftgridcontainer");
-  allLeftCells.removeEventListener("click", (event) => {
-    if (event.target.hasAttribute("class", "emptyCell")) {
-      event.target.removeAttribute("class", "emptyCell");
-      event.target.setAttribute("class", "hasShip");
-      addShip(event.target.id);
-    }
-  });
+  let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
+  LeftAllEmptyCells.removeEventListener("click", addShipDOM);
+  LeftAllEmptyCells.removeEventListener("click", addCellsToCurrentShip);
 }
 
 export {

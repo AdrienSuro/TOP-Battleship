@@ -9,6 +9,7 @@ import {
 export let currentShipLength = 0;
 
 export function addShip(cellId) {
+  console.log("inside addShip");
   let retrieveShip = shipStore.pop();
   currentShipLength = retrieveShip.size;
   let newShip = new Ship(retrieveShip.size, retrieveShip.name, cellId); // -> cmt update currentShipLength ?
