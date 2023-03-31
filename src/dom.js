@@ -21,6 +21,12 @@ function addELAddShip() {
   LeftAllEmptyCells.addEventListener("click", addShipDOM);
 }
 
+function removeAllEventListenersFromCells() {
+  let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
+  LeftAllEmptyCells.removeEventListener("click", addShipDOM);
+  LeftAllEmptyCells.removeEventListener("click", addCellsToCurrentShip);
+}
+
 function addShipDOM(event) {
   if (event.target.hasAttribute("class", "emptyCell")) {
     event.target.removeAttribute("class", "emptyCell");
@@ -30,39 +36,19 @@ function addShipDOM(event) {
 }
 
 function addELforNextCells(cellId, currentShipLength, currentShip) {
-  console.log(currentShipLength);
   removeAllEventListenersFromCells();
-  if (currentShipLength <= 1) {
-    if (shipFleet.length === 0) {
-      return;
-    }
-    addELAddShip();
-    return;
-  }
-  console.log(cellId);
-  console.log(currentShipLength);
   let possibleCells = calculateNextMove(cellId.slice(1));
-  removeAllEventListenersFromCells();
   possibleCells.forEach((e) => {
     let cell = document.getElementById(`a${e}`);
-    cell.removeAttribute("class", "emptyCell");
+    cell.removeAttribute("class", "emptyCell"); //comment leur remettre le class emptyCell ensuite ?
     cell.setAttribute("class", "highlight");
-    cell.addEventListener("click", (e) => {
-      possibleCells.forEach((e) => {
-        let cell = document.getElementById(`a${e}`);
-        cell.removeAttribute("class", "highlight");
-      });
+    cell.addEventListener("click", () => {
+      cell.removeAttribute("class", "highlight");
       cell.setAttribute("class", "hasShip");
-      console.log("inside event listener for next cell");
+      console.log(`cell ${cell.id} has been clicked to add to Ship`);
       addCellsToCurrentShip(cell.id, currentShipLength, currentShip);
     });
   });
-}
-
-function removeAllEventListenersFromCells() {
-  let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
-  LeftAllEmptyCells.removeEventListener("click", addShipDOM);
-  LeftAllEmptyCells.removeEventListener("click", addCellsToCurrentShip);
 }
 
 export {

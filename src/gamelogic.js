@@ -14,27 +14,33 @@ export function addShip(cellId) {
   currentShipLength = retrieveShip.size;
   let newShip = new Ship(retrieveShip.size, retrieveShip.name, cellId); // -> cmt update currentShipLength ?
   shipFleet.push(newShip);
-  console.log(shipFleet);
   gameboardArrayA[cellId.slice(1)].hasShip = true;
   gameboardArrayA[cellId.slice(1)].shipName = retrieveShip.name;
   addELforNextCells(cellId, currentShipLength, newShip);
 }
 
 export function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
-  console.log("inside add next cells to ship");
-  console.log(cell);
+  removeAllEventListenersFromCells();
   currentShip.addCoordinates(cell); // OK
-  console.log(currentShip.coord);
   gameboardArrayA[cell.slice(1)].hasShip = true;
   gameboardArrayA[cell.slice(1)].shipName = currentShip.name;
-  currentShipLength--;
-  console.log(currentShipLength);
-  addELforNextCells(cell, currentShipLength, currentShip);
+  currentShipLength--; // à ce point là, ok on a un bateau de 4 cells qui n'invoque pas ADDSHIP
+  if (shipFleet.length === 0) {
+    return;
+  } else if (currentShipLength === 1) {
+    console.log(gameboardArrayA);
+    console.log(shipFleet);
+    console.log(shipStore);
+    console.log("hi, the ship is already big enough");
+    // removeAllEventListenersFromCells();
+    // addELAddShip();
+  } else if (currentShipLength > 1) {
+    addELforNextCells(cell, currentShipLength, currentShip);
+  }
 }
 
 export function calculateNextMove(number) {
   number = parseFloat(number);
-  console.log(number);
   let numbersArray = [];
   if (
     number != 90 ||
