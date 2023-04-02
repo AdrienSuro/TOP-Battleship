@@ -25,8 +25,7 @@ let gameboardA = new Gameboard("a");
 let gameboardB = new Gameboard("b");
 let gameboardArrayA = getgameboardArrayA();
 createBothGrids();
-// Fn basing upon gameboardA create grid
-addELAddShip(); // adds EL to the left grid
+addELAddShip();
 
 // BOTTOM : function definitions
 export function getgameboardArrayA() {

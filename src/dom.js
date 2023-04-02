@@ -6,8 +6,12 @@ import {
   calculateNextMove,
 } from "./gamelogic.js";
 
+let leftgrid = document.getElementById("leftgridcontainer");
+let leftgridchilds = leftgrid.childNodes;
+let setShipClassFunc = {};
+let addCellFunc = {};
+
 function createBothGrids() {
-  let leftgrid = document.getElementById("leftgridcontainer");
   for (let i = 0; i < 100; i++) {
     let newCell = document.createElement("div");
     newCell.setAttribute("class", "emptyCell");
@@ -17,14 +21,20 @@ function createBothGrids() {
 }
 
 function addELAddShip() {
-  let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
-  LeftAllEmptyCells.addEventListener("click", addShipDOM);
+  leftgrid.addEventListener("click", addShipDOM);
 }
 
 function removeAllEventListenersFromCells() {
-  let LeftAllEmptyCells = document.getElementById("leftgridcontainer");
-  LeftAllEmptyCells.removeEventListener("click", addShipDOM);
-  LeftAllEmptyCells.removeEventListener("click", addCellsToCurrentShip);
+  leftgrid.removeEventListener("click", addShipDOM);
+  // leftgridchilds.forEach(() => {
+  //   removeEventListener("click", addShipDOM);
+  // });
+  leftgridchilds.forEach(() => {
+    removeEventListener("click", setShipClassFunc);
+  });
+  leftgridchilds.forEach(() => {
+    removeEventListener("click", addCellFunc);
+  });
 }
 
 function addShipDOM(event) {
@@ -35,19 +45,28 @@ function addShipDOM(event) {
   }
 }
 
+function setShipClass(x) {
+  x.removeAttribute("class", "highlight");
+  x.setAttribute("class", "hasShip");
+}
+
 function addELforNextCells(cellId, currentShipLength, currentShip) {
   removeAllEventListenersFromCells();
   let possibleCells = calculateNextMove(cellId.slice(1));
   possibleCells.forEach((e) => {
     let cell = document.getElementById(`a${e}`);
     cell.removeAttribute("class", "emptyCell"); //comment leur remettre le class emptyCell ensuite ?
-    cell.setAttribute("class", "highlight");
-    cell.addEventListener("click", () => {
-      cell.removeAttribute("class", "highlight");
-      cell.setAttribute("class", "hasShip");
-      console.log(`cell ${cell.id} has been clicked to add to Ship`);
-      addCellsToCurrentShip(cell.id, currentShipLength, currentShip);
-    });
+    if (!cell.hasAttribute("class", "hasShip")) {
+      cell.setAttribute("class", "highlight");
+    }
+    addCellFunc = () => {
+      addCellsToCurrentShip(cell, currentShipLength, currentShip);
+    };
+    setShipClassFunc = () => {
+      setShipClass(cell);
+    };
+    cell.addEventListener("click", setShipClassFunc);
+    cell.addEventListener("click", addCellFunc);
   });
 }
 

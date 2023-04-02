@@ -1,8 +1,8 @@
 import Ship from "./ship.js";
 import { shipStore, shipFleet, gameboardArrayA } from "./index.js";
 import {
-  removeAllEventListenersFromCells,
   addELAddShip,
+  removeAllEventListenersFromCells,
   addELforNextCells,
 } from "./dom.js";
 
@@ -21,21 +21,18 @@ export function addShip(cellId) {
 
 export function addCellsToCurrentShip(cell, currentShipLength, currentShip) {
   removeAllEventListenersFromCells();
-  currentShip.addCoordinates(cell); // OK
-  gameboardArrayA[cell.slice(1)].hasShip = true;
-  gameboardArrayA[cell.slice(1)].shipName = currentShip.name;
-  currentShipLength--; // à ce point là, ok on a un bateau de 4 cells qui n'invoque pas ADDSHIP
+  currentShip.addCoordinates(cell.id);
+  gameboardArrayA[cell.id.slice(1)].hasShip = true;
+  gameboardArrayA[cell.id.slice(1)].shipName = currentShip.name;
+  currentShipLength--;
   if (shipFleet.length === 0) {
     return;
   } else if (currentShipLength === 1) {
-    console.log(gameboardArrayA);
-    console.log(shipFleet);
-    console.log(shipStore);
     console.log("hi, the ship is already big enough");
-    // removeAllEventListenersFromCells();
-    // addELAddShip();
+    removeAllEventListenersFromCells();
+    addELAddShip();
   } else if (currentShipLength > 1) {
-    addELforNextCells(cell, currentShipLength, currentShip);
+    addELforNextCells(cell.id, currentShipLength, currentShip);
   }
 }
 
